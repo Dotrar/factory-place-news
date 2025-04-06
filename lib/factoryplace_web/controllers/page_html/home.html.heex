@@ -1,10 +1,17 @@
 <.flash_group flash={@flash} />
 
-<div :for={post <- @posts} class="border my-2 py-1">
-  <.icon name="hero-arrow-up-circle" class="float-left" />
-  <p><a href={post.url || ~p"/posts/#{post.id}"}>{post.title}</a></p>
-  <span class="text-xs flex justify-end gap-2">
-    <span class="">by <a href="/">@drek</a></span>
-    <a href={~p"/posts/#{post.id}"}> flag </a>
+<div :for={post <- @posts} class=" my-2 py-1">
+  <span class="block w-full text-xl">
+    <a href={post.url || ~p"/posts/#{post.id}"}>{post.title}</a>
+    <%= if post.url do %>
+      <% uri = URI.parse(post.url)
+      host = "#{uri.scheme}://#{uri.host}" %>
+      <a href={host} class="text-xs italic text-slate-400">({host})</a>
+    <% end %>
+  </span>
+
+  <span class="text-xs flex justify-start gap-1 ml-2 text-slate-400">
+    <span class="">by <a class="text-teal-500" href="/">@drek</a></span>
+    <a href={~p"/posts/#{post.id}"} class="hover:text-red-800"> flag </a>
   </span>
 </div>

@@ -21,12 +21,16 @@ defmodule Factoryplace.CoreTest do
     end
 
     test "create_post/1 with valid data creates a post" do
-      valid_attrs = %{title: "some title", comment: "some comment", url: "some url"}
+      valid_attrs = %{
+        title: "some longer title than is needed",
+        comment: "some comment",
+        url: "https://youtube.com/"
+      }
 
       assert {:ok, %Post{} = post} = Core.create_post(valid_attrs)
-      assert post.title == "some title"
+      assert post.title == "some longer title than is needed"
       assert post.comment == "some comment"
-      assert post.url == "some url"
+      assert post.url == "https://youtube.com/"
     end
 
     test "create_post/1 with invalid data returns error changeset" do
@@ -35,12 +39,17 @@ defmodule Factoryplace.CoreTest do
 
     test "update_post/2 with valid data updates the post" do
       post = post_fixture()
-      update_attrs = %{title: "some updated title", comment: "some updated comment", url: "some updated url"}
+
+      update_attrs = %{
+        title: "some updated title that is also longer",
+        comment: "some updated comment",
+        url: "https://reddit.com/"
+      }
 
       assert {:ok, %Post{} = post} = Core.update_post(post, update_attrs)
-      assert post.title == "some updated title"
+      assert post.title == "some updated title that is also longer"
       assert post.comment == "some updated comment"
-      assert post.url == "some updated url"
+      assert post.url == "https://reddit.com/"
     end
 
     test "update_post/2 with invalid data returns error changeset" do

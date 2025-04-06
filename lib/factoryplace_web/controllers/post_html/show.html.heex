@@ -1,6 +1,5 @@
 <.header>
-  Post {@post.id}
-  <:subtitle>This is a post record from your database.</:subtitle>
+  Comments on {@post.title}
   <:actions>
     <.link href={~p"/posts/#{@post}/edit"}>
       <.button>Edit post</.button>
@@ -8,10 +7,6 @@
   </:actions>
 </.header>
 
-<.list>
-  <:item title="Title">{@post.title}</:item>
-  <:item title="Url">{@post.url}</:item>
-  <:item title="Comment">{@post.comment}</:item>
-</.list>
+<p>{@post.comment}</p>
 
 <.back navigate={~p"/posts"}>Back to posts</.back>

@@ -12,8 +12,8 @@ defmodule Factoryplace.CoreFixtures do
       attrs
       |> Enum.into(%{
         comment: "some comment",
-        title: "some title",
-        url: "some url"
+        title: "some longer title to imply content",
+        url: "http://google.com/"
       })
       |> Factoryplace.Core.create_post()
 
