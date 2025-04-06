@@ -1,3 +1,10 @@
 <.flash_group flash={@flash} />
 
-<p>foo</p>
+<div :for={post <- @posts} class="border my-2 py-1">
+  <.icon name="hero-arrow-up-circle" class="float-left" />
+  <p><a href={post.url || ~p"/posts/#{post.id}"}>{post.title}</a></p>
+  <span class="text-xs flex justify-end gap-2">
+    <span class="">by <a href="/">@drek</a></span>
+    <a href={~p"/posts/#{post.id}"}> flag </a>
+  </span>
+</div>
