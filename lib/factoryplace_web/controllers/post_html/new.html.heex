@@ -1,0 +1,8 @@
+<.header>
+  New Post
+  <:subtitle>Submit a new post using the form below</:subtitle>
+</.header>
+
+<.post_form changeset={@changeset} action={~p"/posts"} />
+
+<.back navigate={~p"/posts"}>Back to posts</.back>

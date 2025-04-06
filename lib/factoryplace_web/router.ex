@@ -1,5 +1,6 @@
 defmodule FactoryplaceWeb.Router do
   use FactoryplaceWeb, :router
+  import Redirect
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -18,7 +19,10 @@ defmodule FactoryplaceWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    resources "/posts", PostController, only: [:create, :new, :show, :delete, :edit, :update]
   end
+
+  redirect "/posts", "/", :permanent
 
   # Other scopes may use custom stacks.
   # scope "/api", FactoryplaceWeb do
