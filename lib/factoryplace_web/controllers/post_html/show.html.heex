@@ -4,9 +4,26 @@
     <.link href={~p"/posts/#{@post}/edit"}>
       <.button>Edit post</.button>
     </.link>
+    <.back navigate={~p"/posts"}>Back to posts</.back>
   </:actions>
 </.header>
 
 <p>{@post.comment}</p>
+<hr />
+<.comment_form changeset={@comment_changeset} action={~p"/posts/#{@post}/comment"} />
+<hr class="m-4" />
+<div :for={comment <- @comment_hierachy[nil]} class="border mt-2 mb-2">
+  <p class="m-2">{comment.body}</p>
+  <div class="mt-2">
+    <span class="text-xs">by @drek</span>
+  </div>
 
-<.back navigate={~p"/posts"}>Back to posts</.back>
+  <div :for={reply <- @comment_hierachy[comment.id] || []} class="border mt-2 mb-2 ml-4">
+    <p class="m-2">{reply.body}</p>
+    <div class="mt-2 text-xs">
+      <span class="">by @drek</span>
+    </div>
+  </div>
+  <hr />
+</div>
+<hr />

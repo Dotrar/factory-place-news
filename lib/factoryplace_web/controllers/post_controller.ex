@@ -3,6 +3,7 @@ defmodule FactoryplaceWeb.PostController do
 
   alias Factoryplace.Core
   alias Factoryplace.Core.Post
+  alias Factoryplace.Core.Comment
 
   def index(conn, _params) do
     posts = Core.list_posts()
@@ -28,7 +29,20 @@ defmodule FactoryplaceWeb.PostController do
 
   def show(conn, %{"id" => id}) do
     post = Core.get_post!(id)
-    render(conn, :show, post: post)
+    comment_changeset = Core.change_comment(%Comment{}, %{post_id: id})
+
+    comment_hierachy =
+      for comment <- post.comments,
+          reduce: %{nil: []} do
+        acc ->
+          Map.update(acc, comment.parent_id, [comment], &[comment | &1])
+      end
+
+    render(conn, :show, %{
+      post: post,
+      comment_changeset: comment_changeset,
+      comment_hierachy: comment_hierachy
+    })
   end
 
   def edit(conn, %{"id" => id}) do
@@ -58,5 +72,17 @@ defmodule FactoryplaceWeb.PostController do
     conn
     |> put_flash(:info, "Post deleted successfully.")
     |> redirect(to: ~p"/posts")
+  end
+
+  def comment(conn, %{"comment" => %{"body" => body}, "id" => post_id}) do
+    case Core.create_comment(%{body: body, post_id: post_id, depth: 0}) do
+      {:ok, _} ->
+        conn
+        |> put_flash(:info, "Comment posted.")
+        |> redirect(to: ~p"/posts/#{post_id}")
+
+      {:error, %Ecto.Changeset{} = changeset} ->
+        render(conn, :new, changeset: changeset)
+    end
   end
 end

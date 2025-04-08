@@ -20,6 +20,9 @@ defmodule FactoryplaceWeb.Router do
 
     get "/", PageController, :home
     resources "/posts", PostController, only: [:create, :new, :show, :delete, :edit, :update]
+
+    # post a comment
+    post "/posts/:id/comment", PostController, :comment
   end
 
   redirect "/posts", "/", :permanent

@@ -1,4 +1,5 @@
 defmodule Factoryplace.Core.Post do
+  alias Factoryplace.Core.Comment
   use Ecto.Schema
   import Ecto.Changeset
   import EctoCommons.URLValidator
@@ -7,6 +8,7 @@ defmodule Factoryplace.Core.Post do
     field :title, :string
     field :comment, :string
     field :url, :string
+    has_many :comments, Comment
 
     timestamps(type: :utc_datetime)
   end
