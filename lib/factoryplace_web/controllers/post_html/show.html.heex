@@ -14,8 +14,9 @@
 <hr class="m-4" />
 <div :for={comment <- @comment_hierachy[nil]} class="border mt-2 mb-2">
   <p class="m-2">{comment.body}</p>
-  <div class="mt-2">
-    <span class="text-xs">by @drek</span>
+  <div class="mt-2 text-xs">
+    <span class="">by @drek</span>
+    <a href={~p"/comments/#{comment}"}> reply</a>
   </div>
 
   <div :for={reply <- @comment_hierachy[comment.id] || []} class="border mt-2 mb-2 ml-4">

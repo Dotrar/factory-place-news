@@ -23,6 +23,10 @@ defmodule FactoryplaceWeb.Router do
 
     # post a comment
     post "/posts/:id/comment", PostController, :comment
+    # edit and delete a comment
+    resources "/comments", CommentController, only: [:delete, :edit, :update, :show]
+    # reply to a comment
+    post "/comments/:id/reply", CommentController, :reply
   end
 
   redirect "/posts", "/", :permanent

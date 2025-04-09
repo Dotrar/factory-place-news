@@ -134,7 +134,12 @@ defmodule Factoryplace.Core do
       ** (Ecto.NoResultsError)
 
   """
-  def get_comment!(id), do: Repo.get!(Comment, id)
+  def get_comment!(id) do
+    Repo.get!(Comment, id)
+    |> Repo.preload([:post])
+  end
+
+  def max_comment_depth(), do: 1
 
   @doc """
   Creates a comment.

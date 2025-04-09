@@ -16,7 +16,8 @@ defmodule Factoryplace.Core.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:body, :post_id])
-    |> validate_required([:body, :post_id])
+    |> cast(attrs, [:body, :post_id, :parent_id, :depth])
+    |> validate_required([:body, :post_id, :depth])
+    |> validate_inclusion(:depth, [0, 1])
   end
 end

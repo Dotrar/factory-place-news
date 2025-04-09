@@ -1,0 +1,23 @@
+<.header>
+  Comment {@comment.id}
+  <:actions>
+    <.link href={~p"/comments/#{@comment}/edit"}>
+      <.button>Edit comment</.button>
+    </.link>
+  </:actions>
+  <.back navigate={~p"/posts/#{@comment.post}"}>Back to post "{@comment.post.title}"</.back>
+</.header>
+
+<p>
+  {@comment.body}
+</p>
+
+<hr />
+
+<%= if @reply_changeset do %>
+  <.comment_form
+    changeset={@reply_changeset}
+    action={~p"/comments/#{@comment}/reply"}
+    label="Reply"
+  />
+<% end %>
