@@ -18,7 +18,7 @@ defmodule Factoryplace.Core.Post do
     post
     |> cast(attrs, [:title, :url, :comment])
     |> validate_required([:title])
-    |> validate_length(:title, min: 12)
+    |> validate_length(:comment, min: 15)
     |> validate_url(:url)
     |> validate_one_of(:url, :comment)
   end
