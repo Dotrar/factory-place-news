@@ -9,31 +9,21 @@ defmodule Factoryplace.Core do
   alias Factoryplace.Core.Post
 
   @doc """
-  Returns the list of posts.
-
-  ## Examples
-
-      iex> list_posts()
-      [%Post{}, ...]
-
+  Returns the list of posts, with comments count
   """
   def list_posts do
-    Repo.all(Post)
+    query =
+      from p in Post,
+        left_join: c in assoc(p, :comments),
+        select: {p, count(c.id)},
+        group_by: p.id
+
+    Repo.all(query)
+    |> Enum.map(fn {post, count} -> %{post | comments_count: count} end)
   end
 
   @doc """
-  Gets a single post.
-
-  Raises `Ecto.NoResultsError` if the Post does not exist.
-
-  ## Examples
-
-      iex> get_post!(123)
-      %Post{}
-
-      iex> get_post!(456)
-      ** (Ecto.NoResultsError)
-
+  Gets a single post, preloaded with comments
   """
   def get_post!(id) do
     Repo.get!(Post, id)
