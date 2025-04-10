@@ -1,13 +1,14 @@
-<header class="px-4 sm:px-6 lg:px-8 bg-teal-600 text-white py-2">
+<header class="px-4 sm:px-6 lg:px-8 bg-teal-600 text-white py-2 text-xl">
   <a href="/">
     <img src="/favicon.ico" class="inline size-8 mr-4" />
     <span class="font-bold">Factory Place </span>
   </a>
-  <span class="float-right">
+  <span class="text-sm">
     <%= for {href,title} <- [
-    {~p"/posts/new","new"}
+    {~p"/about", "about"},
+    {~p"/posts/new","new"},
     ] do %>
-      <a href={href}>{title}</a>
+      <a href={href} class="ml-4">{title}</a>
     <% end %>
   </span>
 </header>

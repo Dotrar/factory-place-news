@@ -18,6 +18,8 @@ defmodule FactoryplaceWeb.Router do
   scope "/", FactoryplaceWeb do
     pipe_through :browser
 
+    get "/about", PageController, :about
+
     get "/", PageController, :home
     resources "/posts", PostController, only: [:create, :new, :show, :delete, :edit, :update]
 
