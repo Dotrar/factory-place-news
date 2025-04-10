@@ -10,6 +10,8 @@ defmodule Factoryplace.Core.Post do
     field :url, :string
     has_many :comments, Comment
 
+    field :comments_count, :integer, virtual: true
+
     timestamps(type: :utc_datetime)
   end
 
