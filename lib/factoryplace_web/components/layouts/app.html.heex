@@ -4,11 +4,22 @@
     <span class="font-bold">Factory Place </span>
   </a>
   <span class="text-sm">
-    <%= for {href,title} <- [
-    {~p"/about", "about"},
-    {~p"/posts/new","new"},
-    ] do %>
-      <a href={href} class="ml-4">{title}</a>
+    <a href={~p"/about"} class="ml-4">about</a>
+    <%= if @current_user do %>
+      <a href={~p"/posts/new"} class="ml-4">new</a>
+      <a href={~p"/users/settings"} class="ml-4">
+        {@current_user.username}
+      </a>
+      <.link href={~p"/users/log_out"} method="delete" class="ml-4">
+        log out
+      </.link>
+    <% else %>
+      <a href={~p"/users/register"} class="ml-4">
+        register
+      </a>
+      <a href={~p"/users/log_in"} class="ml-4">
+        log in
+      </a>
     <% end %>
   </span>
 </header>

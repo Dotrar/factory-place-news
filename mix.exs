@@ -32,6 +32,7 @@ defmodule Factoryplace.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:bcrypt_elixir, "~> 3.0"},
       {:redirect, "~> 0.4.0"},
       {:ecto_commons, "~> 0.3.4"},
       {:phoenix, "~> 1.7.14"},
