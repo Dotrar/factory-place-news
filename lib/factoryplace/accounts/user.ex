@@ -1,5 +1,7 @@
 defmodule Factoryplace.Accounts.User do
   use Ecto.Schema
+  alias Factoryplace.Core.Post
+  alias Factoryplace.Core.Comment
   import Ecto.Changeset
 
   schema "users" do
@@ -10,6 +12,9 @@ defmodule Factoryplace.Accounts.User do
     field :confirmed_at, :utc_datetime
     field :username, :string
     field :about, :string
+
+    has_many :posts, Post
+    has_many :comments, Comment
 
     timestamps(type: :utc_datetime)
   end

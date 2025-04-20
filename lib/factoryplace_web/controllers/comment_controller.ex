@@ -7,14 +7,18 @@ defmodule FactoryplaceWeb.CommentController do
   @doc """
   reply to a parent comment
   """
-  def reply(conn, %{"comment" => %{"body" => body}, "id" => id}) do
+  def reply(%{assigns: %{current_user: user}} = conn, %{
+        "comment" => %{"body" => body},
+        "id" => id
+      }) do
     parent = Core.get_comment!(id)
 
     case Core.create_comment(%{
            body: body,
            depth: parent.depth + 1,
            post_id: parent.post_id,
-           parent_id: parent.id
+           parent_id: parent.id,
+           user_id: user.id
          }) do
       {:ok, comment} ->
         conn

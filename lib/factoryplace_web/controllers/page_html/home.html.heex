@@ -12,7 +12,7 @@
   </span>
 
   <span class="text-xs flex justify-start gap-1 ml-2 text-slate-400">
-    <span class="">by <a class="text-teal-500" href="/">@drek</a></span>
+    <span class="">by <a class="text-teal-500" href="/">{post.user.username}</a></span>
     <a href={~p"/posts/#{post.id}"}>({post.comments_count} comments)</a>
     <a href={~p"/posts/#{post.id}"} class="hover:text-red-800"> flag </a>
   </span>

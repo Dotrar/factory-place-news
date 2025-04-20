@@ -1,5 +1,6 @@
 defmodule Factoryplace.Core.Comment do
   alias Factoryplace.Core.{Post, Comment}
+  alias Factoryplace.Accounts.User
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -9,6 +10,7 @@ defmodule Factoryplace.Core.Comment do
     belongs_to :post, Post
     belongs_to :parent, Comment
     has_many :replies, Comment
+    belongs_to :user, User
 
     timestamps(type: :utc_datetime)
   end
@@ -16,8 +18,8 @@ defmodule Factoryplace.Core.Comment do
   @doc false
   def changeset(comment, attrs) do
     comment
-    |> cast(attrs, [:body, :post_id, :parent_id, :depth])
-    |> validate_required([:body, :post_id, :depth])
+    |> cast(attrs, [:body, :post_id, :parent_id, :depth, :user_id])
+    |> validate_required([:body, :post_id, :depth, :user_id])
     |> validate_inclusion(:depth, [0, 1])
   end
 end

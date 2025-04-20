@@ -15,7 +15,9 @@ defmodule FactoryplaceWeb.PostController do
     render(conn, :new, changeset: changeset)
   end
 
-  def create(conn, %{"post" => post_params}) do
+  def create(%{assigns: %{current_user: user}} = conn, %{"post" => post_params}) do
+    post_params = Map.put(post_params, :user, user)
+
     case Core.create_post(post_params) do
       {:ok, post} ->
         conn
@@ -74,11 +76,14 @@ defmodule FactoryplaceWeb.PostController do
     |> redirect(to: ~p"/posts")
   end
 
-  def comment(conn, %{"comment" => %{"body" => body}, "id" => post_id}) do
-    case Core.create_comment(%{body: body, post_id: post_id, depth: 0}) do
+  def comment(%{assigns: %{current_user: user}} = conn, %{
+        "comment" => %{"body" => body},
+        "id" => post_id
+      }) do
+    case Core.create_comment(%{body: body, post_id: post_id, depth: 0, user_id: user.id}) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "Comment posted.")
+        |> put_flash(:info, "Thanks for your comment #{user.username}.")
         |> redirect(to: ~p"/posts/#{post_id}")
 
       {:error, %Ecto.Changeset{} = changeset} ->

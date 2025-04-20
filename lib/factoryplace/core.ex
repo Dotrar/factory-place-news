@@ -16,7 +16,8 @@ defmodule Factoryplace.Core do
       from p in Post,
         left_join: c in assoc(p, :comments),
         select: {p, count(c.id)},
-        group_by: p.id
+        group_by: p.id,
+        preload: [:user]
 
     Repo.all(query)
     |> Enum.map(fn {post, count} -> %{post | comments_count: count} end)
@@ -27,7 +28,7 @@ defmodule Factoryplace.Core do
   """
   def get_post!(id) do
     Repo.get!(Post, id)
-    |> Repo.preload([:comments])
+    |> Repo.preload([:comments, :user, comments: :user])
   end
 
   @doc """
@@ -108,6 +109,7 @@ defmodule Factoryplace.Core do
   """
   def list_comments do
     Repo.all(Comment)
+    |> Repo.preload([:user])
   end
 
   @doc """
@@ -126,7 +128,7 @@ defmodule Factoryplace.Core do
   """
   def get_comment!(id) do
     Repo.get!(Comment, id)
-    |> Repo.preload([:post])
+    |> Repo.preload([:post, :user])
   end
 
   def max_comment_depth(), do: 1
